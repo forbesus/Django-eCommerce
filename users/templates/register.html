@@ -1,0 +1,40 @@
+{% extends 'index.html' %}
+{% block index %}
+<title>Register Customer</title>
+<div class="page-header">
+    <h3 class="page-title">
+                <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                  <i class="mdi mdi-account-plus"></i>
+                </span> Register Customer </h3>
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">
+                <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+            </li>
+        </ul>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Fill the customer details</h4>
+                <p class="card-description"> {{msg}} </p>
+                <form class="forms-sample" action="{% url 'register_customer' %}" method="post">
+                    {% csrf_token %}
+                    {{form.as_p}}
+<!--                    {% for field in form %}-->
+<!--                    <div class="form-group">-->
+<!--                        <label>{{field.label}}</label>-->
+<!--                        {{field}}-->
+<!--                        {{field.error}}-->
+<!--                    </div>-->
+<!--                    {% endfor %}-->
+                    <button type="submit" class="btn btn-gradient-primary mr-2">Submit</button>
+                    <button class="btn btn-light" formnovalidate name="cancel" value="cancel">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
