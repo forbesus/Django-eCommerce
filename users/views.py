@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.contrib import messages
+from django.shortcuts import render, redirect
 
-# Create your views here.
-from django.urls import reverse
+import sweetify
 
-from users.forms import CustomerForm
+from users.forms import CustomerForm, CustomerStatusForm
+from users.models import CustomerStatus
 
 
 def login(request):
@@ -12,14 +13,24 @@ def login(request):
 
 def register_customer(request):
     if request.method == 'POST':
-        if 'cancel' in request.POST: return render(request, 'dashboard.html')
-        form = CustomerForm(request.POST)
-        if True:
-            form.save(commit=True)
-            return render(request, 'dashboard.html')
+        if 'cancel' in request.POST: return redirect('dashboard')
+        form_basic = CustomerForm(request.POST)
+        form_status = CustomerStatusForm(request.POST)
+        if form_basic.is_valid() and form_status.is_valid():
+            try:
+                instance = form_basic.save(commit=True)
+                instance = CustomerStatus(customer_id=instance.id, status=request.POST.get('status'))
+                CustomerStatusForm(data=request.POST, instance=instance).save(commit=True)
+                sweetify.success(request, 'You successfully changed your password')
+                messages.success(request, 'Successfully Registered')
+                return redirect('dashboard')
+            except Exception as err:
+                messages.error(request, 'Something Went Wrong :' + str(err))
+                return redirect('dashboard')
     else:
-        form = CustomerForm()
-    return render(request, 'register.html', {'form': form})
+        form_basic = CustomerForm()
+        form_status = CustomerStatusForm()
+    return render(request, 'register.html', {'form_basic': form_basic, 'form_status': form_status})
 
 
 def dashboard(request):
