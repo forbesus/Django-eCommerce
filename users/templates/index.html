@@ -197,7 +197,7 @@
                                 New</a>
                             </li>
                             <li class="nav-item"><a class="nav-link"
-                                                    href="pages/ui-features/typography.html">View All</a></li>
+                                                    href="{% url 'get_all_customers' %}">View All</a></li>
                         </ul>
                     </div>
                 </li>
@@ -272,8 +272,7 @@
                      {% if msg.level == 20 %} alert-info {% endif %}
                      {% if msg.level == 25 %} alert-success {% endif %}
                      {% if msg.level == 30 %} alert-warning {% endif %}
-                     {% if msg.level == 40 %} alert-danger {% endif %}
-                     {% if msg.level == DEFAULT_MESSAGE_LEVELS.ERROR %}alert-danger{% endif %}"
+                     {% if msg.level == 40 %} alert-danger {% endif %}"
                      role="alert">
                     {{msg}}
                 </div>

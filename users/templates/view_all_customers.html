@@ -1,0 +1,77 @@
+{% extends 'index.html' %}
+{% block index %}
+<title>Customers</title>
+<div class="page-header">
+    <h3 class="page-title">
+                <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                  <i class="mdi mdi-account-multiple-outline"></i>
+                </span> All Customer </h3>
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">
+                <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<div class="card">
+    <div class="card-body">
+<!--        <h4 class="card-title">Striped Table</h4>-->
+<!--        <p class="card-description"> Add class <code>.table-striped</code>-->
+<!--        </p>-->
+        <div class="overflow-auto">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th> User</th>
+                    <th> Customer Name</th>
+                    <th> Status</th>
+                    <th> Total Fees</th>
+                    <th> Fees Paid</th>
+                    <th> Fees Remain</th>
+                    <th> Started Date</th>
+                    <th> Closing Date</th>
+                    <th> Progress</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for object in objects %}
+                <tr>
+                    <td class="py-1">
+                        {% if object.customer.gender == 'M' %}
+                        <img src="{{baseImages}}/faces-clipart/pic-1.png" alt="image">
+                        {% endif %}
+                        {% if object.customer.gender == 'F' %}
+                        <img src="{{baseImages}}/faces-clipart/pic-2.png" alt="image">
+                        {% endif %}
+                    </td>
+                    <td>{{object.customer.name}}</td>
+                    <td>
+                        {% if object.status %}
+                        <label class="badge badge-success">&nbsp;Active&nbsp;</label>
+                        {% else %}
+                        <label class="badge badge-danger">Inactive</label>
+                        {% endif %}
+                    </td>
+                    <td> ₹ {{object.total_fees}}</td>
+                    <td> ₹ {{object.fees_paid}}</td>
+                    <td> ₹ {{object.fees_remaining}}</td>
+                    <td> {{object.start_date}}</td>
+                    <td> {{object.end_date}}</td>
+                    <td>
+                        <div class="progress">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 25%"
+                                 aria-valuenow="25"
+                                 aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
