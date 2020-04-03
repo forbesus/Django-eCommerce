@@ -1,26 +1,55 @@
-from django.shortcuts import render
+from django.contrib import messages
+from django.shortcuts import render, redirect
 
-# Create your views here.
-from django.urls import reverse
+import sweetify
 
-from users.forms import CustomerForm
+from users.forms import CustomerForm, CustomerStatusForm
+from users.models import CustomerStatus, Customer
+
+USER_ID = 1
 
 
 def login(request):
-    return render(request, 'login.html')
-
-
-def register_customer(request):
-    if request.method == 'POST':
-        if 'cancel' in request.POST: return render(request, 'dashboard.html')
-        form = CustomerForm(request.POST)
-        if True:
-            form.save(commit=True)
-            return render(request, 'dashboard.html')
-    else:
-        form = CustomerForm()
-    return render(request, 'register.html', {'form': form})
+    if request.method == 'GET':
+        messages.info(request, "Please Login")
+        return render(request, 'login.html')
+    return redirect('dashboard')
 
 
 def dashboard(request):
     return render(request, 'dashboard.html')
+
+
+def register_customer(request):
+    if request.method == 'POST':
+        if 'cancel' in request.POST: return redirect('dashboard')
+        instance = Customer(user_map_id=USER_ID)
+        form_basic = CustomerForm(data=request.POST, instance=instance)
+        form_status = CustomerStatusForm(request.POST)
+        if form_basic.is_valid() and form_status.is_valid():
+            try:
+                form_basic = form_basic.save(commit=True)
+                instance = CustomerStatus(customer=form_basic, status=request.POST.get('status'))
+                CustomerStatusForm(data=request.POST, instance=instance).save(commit=True)
+                sweetify.success(request, 'You successfully changed your password')
+                messages.success(request, 'Successfully Registered')
+                return redirect('dashboard')
+            except Exception as err:
+                messages.error(request, 'Something Went Wrong :' + str(err))
+                return redirect('dashboard')
+    else:
+        form_basic = CustomerForm()
+        form_status = CustomerStatusForm()
+    return render(request, 'register.html', {'form_basic': form_basic, 'form_status': form_status})
+
+
+def get_all_customers(request):
+    if request.method == 'GET':
+        instance_objects = CustomerStatus.objects.filter(customer__user_map_id=USER_ID).select_related() \
+            .order_by('-customer__created_at')
+        return render(request, 'view_all_customers.html', {'objects': instance_objects})
+    return redirect('dashboard')
+
+
+def get_customer_progress(obj):
+    return 25

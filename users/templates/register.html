@@ -22,14 +22,40 @@
                 <p class="card-description"> {{msg}} </p>
                 <form class="forms-sample" action="{% url 'register_customer' %}" method="post">
                     {% csrf_token %}
-                    {{form.as_p}}
-<!--                    {% for field in form %}-->
-<!--                    <div class="form-group">-->
-<!--                        <label>{{field.label}}</label>-->
-<!--                        {{field}}-->
-<!--                        {{field.error}}-->
-<!--                    </div>-->
-<!--                    {% endfor %}-->
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <p class="card-description">Basic Details</p>
+                            {{form_basic.as_p}}
+                        </div>
+                        <div class="col-lg-6">
+                            <p class="card-description">Customer Status </p>
+                            {{form_status.as_p}}
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Membership</label>
+                                <div class="col-sm-4">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="status"
+                                                   id="membershipRadios1" value="1" checked> Active </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="status"
+                                                   id="membershipRadios2" value="0" checked> Inactive </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--                    {% for field in form %}-->
+                    <!--                    <div class="form-group">-->
+                    <!--                        <label>{{field.label}}</label>-->
+                    <!--                        {{field}}-->
+                    <!--                        {{field.error}}-->
+                    <!--                    </div>-->
+                    <!--                    {% endfor %}-->
                     <button type="submit" class="btn btn-gradient-primary mr-2">Submit</button>
                     <button class="btn btn-light" formnovalidate name="cancel" value="cancel">Cancel</button>
                 </form>

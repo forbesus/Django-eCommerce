@@ -193,10 +193,11 @@
                     </a>
                     <div class="collapse" id="ui-basic">
                         <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"><a class="nav-link" href="{% url 'register_customer' %}">Register New</a>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'register_customer' %}">Register
+                                New</a>
                             </li>
                             <li class="nav-item"><a class="nav-link"
-                                                    href="pages/ui-features/typography.html">View All</a></li>
+                                                    href="{% url 'get_all_customers' %}">View All</a></li>
                         </ul>
                     </div>
                 </li>
@@ -265,10 +266,20 @@
         <!-- partial -->
         <div class="main-panel">
             <div class="content-wrapper">
-              {% block index %}
+                {% for msg in messages %}
+                <div id="deletesuccess"
+                     class="alert
+                     {% if msg.level == 20 %} alert-info {% endif %}
+                     {% if msg.level == 25 %} alert-success {% endif %}
+                     {% if msg.level == 30 %} alert-warning {% endif %}
+                     {% if msg.level == 40 %} alert-danger {% endif %}"
+                     role="alert">
+                    {{msg}}
+                </div>
+                {% endfor %}
+                {% block index %}
 
-
-              {% endblock %}
+                {% endblock %}
             </div>
             <footer class="footer">
                 <div class="d-sm-flex justify-content-center justify-content-sm-between">

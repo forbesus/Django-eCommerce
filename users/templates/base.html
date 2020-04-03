@@ -2,24 +2,32 @@
 {% static 'assets/images' as baseImages %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="{% static 'assets/vendors/mdi/css/materialdesignicons.min.css' %}">
     <link rel="stylesheet" href="{% static 'assets/vendors/css/vendor.bundle.base.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
-    <link rel="shortcut icon" href="{{baseImages}}/favicon.png" />
-  </head>
-  <body>
-  	{% block base %}
+    <link rel="shortcut icon" href="{{baseImages}}/favicon.png"/>
+</head>
+<body>
+{% block base %}
 
 
-  	{% endblock %}
+{% endblock %}
 
-    <script src="{% static 'assets/vendors/js/vendor.bundle.base.js' %}"></script>
-    <script src="{% static 'assets/js/off-canvas.js' %}"></script>
-    <script src="{% static 'assets/js/hoverable-collapse.js' %}"></script>
-    <script src="{% static 'assets/js/misc.js' %}"></script>
-  </body>
+<script src="{% static 'assets/vendors/js/vendor.bundle.base.js' %}"></script>
+<script src="{% static 'assets/js/off-canvas.js' %}"></script>
+<script src="{% static 'assets/js/hoverable-collapse.js' %}"></script>
+<script src="{% static 'assets/js/misc.js' %}"></script>
+<script src="{% static 'assets/js/jquery-latest.js' %}"></script>
+<script type="text/javascript">
+      $(document).ready( function() {
+        $('#deletesuccess').delay(1000).fadeOut();
+      });
+</script>
+    {% load sweetify %}
+    {% sweetify %}
+</body>
 </html>
