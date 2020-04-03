@@ -29,3 +29,36 @@ INFO 2020-04-03 02:55:49,576 django.server.log_message:157 - "GET /admin/jsi18n/
 INFO 2020-04-03 02:55:54,708 django.server.log_message:157 - "GET /admin/ HTTP/1.1" 200 4190
 INFO 2020-04-03 02:55:59,927 django.server.log_message:157 - "GET /admin/users/customerstatus/ HTTP/1.1" 200 4433
 INFO 2020-04-03 02:55:59,997 django.server.log_message:157 - "GET /admin/jsi18n/ HTTP/1.1" 200 3223
+INFO 2020-04-03 03:02:38,194 django.utils.autoreload.run_with_reloader:598 - Watching for file changes with StatReloader
+INFO 2020-04-03 03:02:52,981 django.server.log_message:157 - "GET /admin/users/ HTTP/1.1" 200 2907
+WARNING 2020-04-03 03:02:53,219 django.request.log_response:222 - Not Found: /favicon.ico
+WARNING 2020-04-03 03:02:53,220 django.server.log_message:157 - "GET /favicon.ico HTTP/1.1" 404 2504
+INFO 2020-04-03 03:03:01,894 django.server.log_message:157 - "GET /dashboard HTTP/1.1" 200 33104
+INFO 2020-04-03 03:03:01,951 django.server.log_message:157 - "GET /static/assets/vendors/mdi/css/materialdesignicons.min.css HTTP/1.1" 200 163361
+INFO 2020-04-03 03:03:01,954 django.server.log_message:157 - "GET /static/assets/vendors/css/vendor.bundle.base.css HTTP/1.1" 200 2598
+INFO 2020-04-03 03:03:01,965 django.server.log_message:157 - "GET /static/assets/css/style.css HTTP/1.1" 200 383772
+INFO 2020-04-03 03:03:01,967 django.server.log_message:157 - "GET /static/assets/vendors/js/vendor.bundle.base.js HTTP/1.1" 200 185673
+INFO 2020-04-03 03:03:01,973 django.server.log_message:157 - "GET /static/assets/js/off-canvas.js HTTP/1.1" 200 185
+INFO 2020-04-03 03:03:01,981 django.server.log_message:157 - "GET /static/assets/js/hoverable-collapse.js HTTP/1.1" 200 901
+INFO 2020-04-03 03:03:01,987 django.server.log_message:157 - "GET /static/assets/js/misc.js HTTP/1.1" 200 4545
+INFO 2020-04-03 03:03:01,988 django.server.log_message:157 - "GET /static/assets/images/logo.svg HTTP/1.1" 200 5595
+INFO 2020-04-03 03:03:02,003 django.server.log_message:157 - "GET /static/assets/images/logo-mini.svg HTTP/1.1" 200 2007
+INFO 2020-04-03 03:03:02,004 django.server.log_message:157 - "GET /static/assets/images/faces/face1.jpg HTTP/1.1" 200 12977
+INFO 2020-04-03 03:03:02,007 django.server.log_message:157 - "GET /static/assets/js/jquery-latest.js HTTP/1.1" 200 293072
+INFO 2020-04-03 03:03:02,016 django.server.log_message:157 - "GET /static/assets/images/faces/face4.jpg HTTP/1.1" 200 11728
+INFO 2020-04-03 03:03:02,018 django.server.log_message:157 - "GET /static/assets/images/faces/face2.jpg HTTP/1.1" 200 13360
+INFO 2020-04-03 03:03:02,020 django.server.log_message:157 - "GET /static/assets/images/faces/face3.jpg HTTP/1.1" 200 15550
+INFO 2020-04-03 03:03:02,028 django.server.log_message:157 - "GET /static/assets/images/dashboard/circle.svg HTTP/1.1" 200 920
+INFO 2020-04-03 03:03:02,028 django.server.log_message:157 - "GET /static/assets/images/dashboard/img_1.jpg HTTP/1.1" 200 21936
+INFO 2020-04-03 03:03:02,040 django.server.log_message:157 - "GET /static/assets/images/dashboard/img_4.jpg HTTP/1.1" 200 24674
+INFO 2020-04-03 03:03:02,043 django.server.log_message:157 - "GET /static/assets/images/dashboard/img_3.jpg HTTP/1.1" 200 33360
+INFO 2020-04-03 03:03:02,044 django.server.log_message:157 - "GET /static/assets/images/dashboard/img_2.jpg HTTP/1.1" 200 21375
+INFO 2020-04-03 03:03:02,379 django.server.log_message:157 - "GET /static/assets/fonts/Ubuntu/Ubuntu-Regular.woff2 HTTP/1.1" 200 99456
+INFO 2020-04-03 03:03:02,381 django.server.log_message:157 - "GET /static/assets/fonts/Ubuntu/Ubuntu-Medium.woff2 HTTP/1.1" 200 90232
+INFO 2020-04-03 03:03:02,382 django.server.log_message:157 - "GET /static/assets/fonts/Ubuntu/Ubuntu-Bold.woff2 HTTP/1.1" 200 84400
+INFO 2020-04-03 03:03:02,383 django.server.log_message:157 - "GET /static/assets/fonts/Ubuntu/Ubuntu-Light.woff2 HTTP/1.1" 200 116192
+INFO 2020-04-03 03:03:02,384 django.server.log_message:157 - "GET /static/assets/vendors/mdi/fonts/materialdesignicons-webfont.woff2?v=3.7.95 HTTP/1.1" 200 198460
+INFO 2020-04-03 03:03:02,574 django.server.log_message:157 - "GET /static/assets/images/favicon.png HTTP/1.1" 200 1625
+INFO 2020-04-03 03:03:05,623 django.server.log_message:157 - "GET /register HTTP/1.1" 200 22139
+INFO 2020-04-03 03:04:01,951 django.server.log_message:157 - "POST /register HTTP/1.1" 302 0
+INFO 2020-04-03 03:04:01,982 django.server.log_message:157 - "GET /dashboard HTTP/1.1" 200 33622

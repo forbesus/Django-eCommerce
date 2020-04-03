@@ -8,21 +8,7 @@ from users.models import CustomerStatus
 
 
 def login(request):
-    if request.method == "POST":
-        username=request.POST.get("username")
-        password=request.POST.get("password")
-
-        print(username,password," Is the values you have entered")
-        try:
-            user = UserAuth.objects.get(username=username,password=password)
-            request.session['auth']=True
-            return redirect('dashboard')
-
-        except:
-            return HttpResponse("Failed")
-
-    else:
-        return render(request, 'login.html')
+    return render(request, 'login.html')
 
 
 def register_customer(request):
