@@ -1,0 +1,27 @@
+{% extends 'index.html' %}
+{% block index %}
+<title>Customer Profile</title>
+<div class="page-header">
+    <h3 class="page-title">
+                <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                  <i class="mdi mdi-account-outline"></i>
+                </span> {{object.customer.name}}</h3>
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">
+                <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <!--        <h4 class="card-title">Striped Table</h4>-->
+        <!--        <p class="card-description"> Add class <code>.table-striped</code>-->
+        <!--        </p>-->
+        {{object}}
+    </div>
+</div>
+{% endblock %}
+
