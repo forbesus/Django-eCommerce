@@ -1,7 +1,9 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
+
 from users.forms import CustomerForm, CustomerStatusForm
 from users.models import CustomerStatus, Customer
+from users.validation import get_dashboard_data
 
 USER_ID = 1
 
@@ -14,7 +16,8 @@ def login(request):
 
 
 def dashboard(request):
-    return render(request, 'dashboard.html')
+    data = get_dashboard_data(USER_ID)
+    return render(request, 'dashboard.html', {'data': data})
 
 
 def register_customer(request):
