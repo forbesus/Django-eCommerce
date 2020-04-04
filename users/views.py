@@ -1,7 +1,6 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
 
-
 from users.forms import CustomerForm, CustomerStatusForm
 from users.models import CustomerStatus, Customer
 
@@ -49,5 +48,9 @@ def get_all_customers(request):
     return redirect('dashboard')
 
 
-def get_customer_progress(obj):
-    return 25
+def error404(request, exception):
+    return render(request, 'error_404.html')
+
+
+def error500(request):
+    return render(request, 'error_500.html')
