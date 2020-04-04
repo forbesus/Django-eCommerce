@@ -50,6 +50,11 @@ def get_all_customers(request):
     return redirect('dashboard')
 
 
+def get_customer_details(request, customer_id):
+    instance_object = CustomerStatus.objects.filter(customer__id=customer_id).select_related()
+    return render(request, 'customer_profile.html', {'object': instance_object[0]})
+
+
 def error404(request, exception):
     return render(request, 'error_404.html')
 

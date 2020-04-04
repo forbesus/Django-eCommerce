@@ -55,23 +55,23 @@ class CustomerStatusForm(forms.ModelForm):
                                  initial=datetime.date.today,
                                  widget=DateInput(attrs={'class': 'form-control'}),
                                  required=True)
-    end_date = forms.DateField(label='Start Date',
+    end_date = forms.DateField(label='Closing Date',
                                initial=datetime.date.today,
                                widget=DateInput(attrs={'class': 'form-control'}),
                                required=True)
     total_fees = forms.IntegerField(label='Total Fees',
                                     widget=forms.NumberInput(
-                                        attrs={'class': 'form-control', 'placeholder': 'Adhar No.'}),
+                                        attrs={'class': 'form-control', 'placeholder': 'Total Fees'}),
                                     required=True
                                     )
     fees_paid = forms.IntegerField(label='Paid Fees',
                                    widget=forms.NumberInput(
-                                       attrs={'class': 'form-control', 'placeholder': 'Adhar No.'}),
+                                       attrs={'class': 'form-control', 'placeholder': 'Paid Fees'}),
                                    required=True
                                    )
     fees_remaining = forms.IntegerField(label='Remaining Fees',
                                         widget=forms.NumberInput(
-                                            attrs={'class': 'form-control', 'placeholder': 'Adhar No.'}),
+                                            attrs={'class': 'form-control', 'placeholder': 'Remaining Fees'}),
                                         required=True
                                         )
 
