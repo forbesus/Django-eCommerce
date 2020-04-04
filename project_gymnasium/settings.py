@@ -24,7 +24,7 @@ SECRET_KEY = '4d)i=@612tzbw$5r05@fvgjtdz(5!)ldvhiq6v5_na#$56nax4'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'iamgirishsawant.pythonanywhere.com']
 
 # Application definition
 
@@ -35,7 +35,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'sweetify',
     'users'
 ]
 LOGGING = {
@@ -137,13 +136,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 
-STATIC_PATH = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
+STATIC_PATH = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [
     STATIC_PATH,
 ]
-# STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
+STATIC_ROOT = '/home/iamgirishsawant/project-gymnsium/static'
 
 MEDIA_ROOT = '/static/media'
 MEDIA_URL = '/media/'
-SWEETIFY_SWEETALERT_LIBRARY = 'sweetalert2'

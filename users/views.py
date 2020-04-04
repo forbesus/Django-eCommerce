@@ -1,7 +1,6 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
 
-import sweetify
 
 from users.forms import CustomerForm, CustomerStatusForm
 from users.models import CustomerStatus, Customer
@@ -31,7 +30,6 @@ def register_customer(request):
                 form_basic = form_basic.save(commit=True)
                 instance = CustomerStatus(customer=form_basic, status=request.POST.get('status'))
                 CustomerStatusForm(data=request.POST, instance=instance).save(commit=True)
-                sweetify.success(request, 'You successfully changed your password')
                 messages.success(request, 'Successfully Registered')
                 return redirect('dashboard')
             except Exception as err:
