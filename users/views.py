@@ -1,6 +1,5 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
-
 from users.forms import CustomerForm, CustomerStatusForm
 from users.models import CustomerStatus, Customer
 
