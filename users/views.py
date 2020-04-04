@@ -1,8 +1,7 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
-
 from users.forms import CustomerForm, CustomerStatusForm
-from users.models import CustomerStatus, Customer
+from users.models import CustomerStatus, Customer, UserAuth
 from users.validation import get_dashboard_data
 
 USER_ID = 1
@@ -12,8 +11,25 @@ def login(request):
     if request.method == 'GET':
         messages.info(request, "Please Login")
         return render(request, 'login.html')
-    return redirect('dashboard')
+    else:
+        username = request.POST.get('username')
+        password = request.POST.get('password')
 
+        try:
+            user = UserAuth.objects.get(username=username,password=password)
+            request.session['auth']=True
+            request.session['auth_login'] =True
+            return redirect('dashboard')
+        except:
+            messages.error(request, 'Something Went Wrong :')
+            return render(request,'login.html')
+
+def logout(request):
+    try:
+        del request.session['auth_login']
+    except KeyError:
+        pass
+    return render(request,'logout.html')
 
 def dashboard(request):
     data = get_dashboard_data(USER_ID)
