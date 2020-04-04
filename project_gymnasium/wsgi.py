@@ -1,19 +1,15 @@
-# +++++++++++ DJANGO +++++++++++
-# To use your own Django app use code like this:
+# To use your own django app use code like this:
 import os
 import sys
-
-# assuming your Django settings file is at '/home/myusername/mysite/mysite/settings.py'
-path = '/home/iamgirishsawant999/project_gymnsium'
+#
+## assuming your django settings file is at '/home/iamgirishsawant/mysite/mysite/settings.py'
+## and your manage.py is is at '/home/iamgirishsawant/mysite/manage.py'
+path = '/home/iamgirishsawant/project-gymnsium'
 if path not in sys.path:
-    sys.path.insert(0, path)
+   sys.path.append(path)
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'project_gymnsium.settings'
 
-## Uncomment the lines below depending on your Django version
-###### then, for Django >=1.5:
-from django.core.wsgi import get_wsgi_application
-application = get_wsgi_application()
-###### or, for older Django <=1.4
-#import django.core.handlers.wsgi
-#application = django.core.handlers.wsgi.WSGIHandler()
+## then:
+#from django.core.wsgi import get_wsgi_application
+#application = get_wsgi_application()
