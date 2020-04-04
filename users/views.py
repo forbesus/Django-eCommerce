@@ -21,7 +21,7 @@ def login(request):
             request.session['auth_login'] =True
             return redirect('dashboard')
         except:
-            messages.error(request, 'Something Went Wrong :')
+            messages.error(request, 'Username or Password is incorrect')
             return render(request,'login.html')
 
 def logout(request):
