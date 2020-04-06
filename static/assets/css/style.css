@@ -13375,4 +13375,9 @@ dl {
   -ms-flex-positive: 1;
   flex-grow: 1; }
 
+@media screen and (max-width: 576px) {
+ .content-wrapper {
+    padding: 0.75rem 1.25rem !important;
+   }
+}
 /*# sourceMappingURL=style.css.map */

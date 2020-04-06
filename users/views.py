@@ -14,22 +14,24 @@ def login(request):
     else:
         username = request.POST.get('username')
         password = request.POST.get('password')
-
         try:
-            user = UserAuth.objects.get(username=username,password=password)
-            request.session['auth']=True
-            request.session['auth_login'] =True
+            user = UserAuth.objects.get(username=username, password=password)
+            request.session['user_id'] = user.user_id
+            request.session['auth_login'] = True
             return redirect('dashboard')
         except:
             messages.error(request, 'Username or Password is incorrect')
-            return render(request,'login.html')
+            return render(request, 'login.html')
+
 
 def logout(request):
     try:
         del request.session['auth_login']
+        del request.session['user_id']
     except KeyError:
         pass
-    return render(request,'logout.html')
+    return render(request, 'logout.html')
+
 
 def dashboard(request):
     data = get_dashboard_data(USER_ID)

@@ -1,11 +1,12 @@
 {% extends 'index.html' %}
+{% load humanize %}
 {% block index %}
 <title>Customer Profile</title>
 <div class="page-header">
     <h3 class="page-title">
                 <span class="page-title-icon bg-gradient-primary text-white mr-2">
                   <i class="mdi mdi-account-outline"></i>
-                </span> {{object.customer.name}}</h3>
+                </span> Profile</h3>
     <nav aria-label="breadcrumb">
         <ul class="breadcrumb">
             <li class="breadcrumb-item active" aria-current="page">
@@ -20,7 +21,43 @@
         <!--        <h4 class="card-title">Striped Table</h4>-->
         <!--        <p class="card-description"> Add class <code>.table-striped</code>-->
         <!--        </p>-->
-        {{object}}
+        <div class="row">
+            <div class="col-lg-12 col-md-12 font-size13 text-right m-padding-bottom10">
+                <i class="mdi mdi-information-outline  icon-sm text-primary"></i>
+                Updated {{object.customer.updated_at| naturaltime}}
+            </div>
+            <div class="col-lg-2 col-md-2 text-center m-padding-bottom10">
+                {% if object.customer.gender == 'M' %}
+                <img src="{{baseImages}}/faces-clipart/pic-1-m.png" alt="image">
+                {% endif %}
+                {% if object.customer.gender == 'F' %}
+                <img src="{{baseImages}}/faces-clipart/pic-2-m.png" alt="image">
+                {% endif %}
+            </div>
+            <div class="col-lg-10 col-md-10 padding-left0 padding-right0">
+                <div class="col-lg-12 col-md-12 padding-bottom5 font-weight700 font-size18">
+                    <i class="mdi mdi-account-circle icon-list text-primary"></i>&nbsp;
+                    {{object.customer.name}}</div>
+                <div class="col-lg-12 col-md-12 padding-bottom5">
+                    <i class="mdi mdi-cellphone  icon-list text-primary"></i>&nbsp;
+                    {{object.customer.contact_no}}
+                </div>
+                {% if object.customer.email %}
+                <div class="col-lg-12 col-md-12 padding-bottom5">
+                    <i class="mdi mdi-gmail icon-list text-primary"></i>&nbsp;
+                    {{object.customer.email}}
+                </div>
+                {% endif %}
+                <div class="col-lg-12 col-md-12 padding-bottom5">
+                    <i class="mdi mdi-cake-variant icon-list text-primary"></i>&nbsp;
+                    {{object.customer.dob}}
+                </div>
+                <div class="col-lg-12 col-md-12 padding-bottom5">
+                    <i class="mdi mdi-home-map-marker icon-list text-primary"></i>&nbsp;
+                    {{object.customer.address}}
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

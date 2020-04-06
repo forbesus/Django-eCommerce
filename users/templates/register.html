@@ -64,3 +64,26 @@
     </div>
 </div>
 {% endblock %}
+
+{% block scripts %}
+<script>
+ $(function() {
+    $("#id_total_fees, #id_fees_paid").on("keydown keyup", subtract);
+    function subtract() {
+        $("#id_fees_remaining").val(Number($("#id_total_fees").val()) - Number($("#id_fees_paid").val()));
+        }
+     });
+
+</script>
+<script>
+ $(function() {
+    $("#month").on("keydown keyup", getDate);
+    function getDate() {
+        var now = new Date($("#id_start_date").val()
+        var num = Number($("#month").val()
+        $("#id_end_date").val(new Date(now.getFullYear(), now.getMonth()+num, 1););
+        console.log('HI');
+        }
+     });
+</script>
+{% endblock %}
