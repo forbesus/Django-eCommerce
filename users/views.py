@@ -23,7 +23,6 @@ def login(request):
             messages.error(request, 'Username or Password is incorrect')
             return render(request, 'login.html')
 
-
 def logout(request):
     try:
         del request.session['auth_login']
