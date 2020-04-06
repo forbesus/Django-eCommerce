@@ -36,6 +36,7 @@ class CustomerStatus(models.Model):
     def __str__(self):
         return f'Customer: {self.customer} | Status : {self.status}'
 
+
 class UserAuth(models.Model):
     user_id = models.IntegerField(primary_key=True)
     username = models.CharField(max_length=100)
@@ -43,6 +44,3 @@ class UserAuth(models.Model):
 
     def __str__(self):
         return f"User  : {self.user_id} . {self.username}"
-
-
-

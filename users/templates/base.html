@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{% static 'assets/vendors/mdi/css/materialdesignicons.min.css' %}">
     <link rel="stylesheet" href="{% static 'assets/vendors/css/vendor.bundle.base.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/app.css' %}">
     <link rel="shortcut icon" href="{{baseImages}}/favicon.png"/>
 </head>
 <body>
@@ -27,5 +28,9 @@
         $('#deletesuccess').delay(1000).fadeOut();
       });
 </script>
+{% block scripts %}
+
+
+{% endblock %}
 </body>
 </html>

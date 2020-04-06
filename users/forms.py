@@ -71,7 +71,7 @@ class CustomerStatusForm(forms.ModelForm):
                                    )
     fees_remaining = forms.IntegerField(label='Remaining Fees',
                                         widget=forms.NumberInput(
-                                            attrs={'class': 'form-control', 'placeholder': 'Remaining Fees'}),
+                                            attrs={'class': 'form-control', 'placeholder': 'Remaining Fees', 'readonly':True}),
                                         required=True
                                         )
 
