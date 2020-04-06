@@ -75,15 +75,15 @@
      });
 
 </script>
-<script>
- $(function() {
-    $("#month").on("keydown keyup", getDate);
-    function getDate() {
-        var now = new Date($("#id_start_date").val()
-        var num = Number($("#month").val()
-        $("#id_end_date").val(new Date(now.getFullYear(), now.getMonth()+num, 1););
-        console.log('HI');
-        }
-     });
-</script>
+<!--<script>-->
+<!-- $(function() {-->
+<!--    $("#month").on("keydown keyup", getDate);-->
+<!--    function getDate() {-->
+<!--        var now = new Date($("#id_start_date").val()-->
+<!--        var num = Number($("#month").val()-->
+<!--        $("#id_end_date").val(new Date(now.getFullYear(), now.getMonth()+num, 1););-->
+<!--        console.log('HI');-->
+<!--        }-->
+<!--     });-->
+<!--</script>-->
 {% endblock %}
