@@ -30,10 +30,11 @@
                 {% endif %}
             </div>
             <div class="col-lg-6 col-md-6 col-9 font-size13 text-right padding-bottom10">
-                <i class="mdi mdi-information-outline  icon-sm text-primary"></i>
+                <i class="mdi mdi-clock-alert  icon-sm text-primary"></i>
                 Updated {{object.customer.updated_at| naturaltime}}
             </div>
-            <div class="col-lg-2 col-md-2 text-center m-padding-bottom15">
+
+            <div class="col-lg-12 col-md-12 col-12 text-center padding-bottom15">
                 {% if object.customer.gender == 'M' %}
                 <img src="{{baseImages}}/faces-clipart/pic-1-m.png" alt="image">
                 {% endif %}
@@ -41,28 +42,86 @@
                 <img src="{{baseImages}}/faces-clipart/pic-2-m.png" alt="image">
                 {% endif %}
             </div>
-            <div class="col-lg-10 col-md-10 padding-left0 padding-right0">
-                <div class="col-lg-12 col-md-12 padding-bottom5 font-weight700 font-size18">
-                    <i class="mdi mdi-account-circle icon-list text-primary"></i>&nbsp;
-                    {{object.customer.name}}
+            <div class="col-lg-12 col-md-12 col-12 text-center font-size18 font-weight900 padding-bottom15">
+                {{object.customer.name}}
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-12 disable-select padding-bottom5">
+                <ul class="tab">
+                    <li>
+                        <a class="tablinks" id="default-tab" onclick="openCity(event, 'tab-1')">
+                            Basic Details
+                        </a>
+                    </li>
+                    <li>
+                        <a class="tablinks" onclick="openCity(event, 'tab-2')">
+                            Status Details
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+
+            <div class="col-lg-12 col-md-12 col-12">
+                <div id="tab-1" class="tabcontent">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-12 padding-bottom15">
+                            <i class="mdi mdi-clock icon-list text-primary"></i>&nbsp;
+                            Created On - {{object.customer.created_at | date}}
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-12 padding-bottom15">
+                            <i class="mdi mdi-cellphone  icon-list text-primary"></i>&nbsp;
+                            Contact No - {{object.customer.contact_no}}
+                        </div>
+                        {% if object.customer.email %}
+                        <div class="col-lg-12 col-md-12 col-12 padding-bottom15">
+                            <i class="mdi mdi-gmail icon-list text-primary"></i>&nbsp;
+                            Email - {{object.customer.email}}
+                        </div>
+                        {% endif %}
+                        <div class="col-lg-12 col-md-12 col-12 padding-bottom15">
+                            <i class="mdi mdi-cake-variant icon-list text-primary"></i>&nbsp;
+                            Date of Birth - {{object.customer.dob | date}}
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-12 padding-bottom15">
+                            <i class="mdi mdi-home-map-marker icon-list text-primary"></i>&nbsp;
+                            Address - {{object.customer.address}}
+                        </div>
+                    </div>
                 </div>
-                <div class="col-lg-12 col-md-12 padding-bottom5">
-                    <i class="mdi mdi-cellphone  icon-list text-primary"></i>&nbsp;
-                    {{object.customer.contact_no}}
-                </div>
-                {% if object.customer.email %}
-                <div class="col-lg-12 col-md-12 padding-bottom5">
-                    <i class="mdi mdi-gmail icon-list text-primary"></i>&nbsp;
-                    {{object.customer.email}}
-                </div>
-                {% endif %}
-                <div class="col-lg-12 col-md-12 padding-bottom5">
-                    <i class="mdi mdi-cake-variant icon-list text-primary"></i>&nbsp;
-                    {{object.customer.dob}}
-                </div>
-                <div class="col-lg-12 col-md-12 padding-bottom5">
-                    <i class="mdi mdi-home-map-marker icon-list text-primary"></i>&nbsp;
-                    {{object.customer.address}}
+                <div id="tab-2" class="tabcontent">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-12 padding-bottom15">
+                            <i class="mdi mdi-information icon-list text-primary"></i>&nbsp;
+                            Status - {% if object.status %}Active{% else %}Inactive{% endif %}
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-12 padding-bottom15">
+                            <i class="mdi mdi-clock-alert  icon-list text-primary"></i>&nbsp;
+                            Status updated on - {{object.updated_at | date}}
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-12 padding-bottom15">
+                            <i class="mdi mdi-calendar-plus icon-list text-primary"></i>&nbsp;
+                            Started Date - {{object.start_date}}
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-12 padding-bottom15">
+                            <i class="mdi mdi-calendar-remove icon-list text-primary"></i>&nbsp;
+                            Closing Date - {{object.end_date}}
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-12 padding-bottom15">
+                            <i class="mdi mdi-cash-multiple icon-list text-primary"></i>&nbsp;
+                            Total Fees - ₹ {{object.total_fees|intcomma}}
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-12 padding-bottom15">
+                            <i class="mdi mdi-cash icon-list text-primary"></i>&nbsp;
+                            Fees paid - ₹ {{object.fees_paid|intcomma}}
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-12 padding-bottom15">
+                            <i class="mdi mdi-cash icon-list text-primary"></i>&nbsp;
+                            Fees Remaining - ₹ {{object.fees_remaining|intcomma}}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -70,3 +129,21 @@
 </div>
 {% endblock %}
 
+{% block scripts %}
+<script>
+    document.getElementById('default-tab').click();
+    function openCity(evt, tabName) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(tabName).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+</script>
+{% endblock %}
