@@ -1,3 +1,9 @@
+.disable-select {
+  user-select: none !important; /* standerd */
+  -moz-user-select: none !important; /* firefox specific */
+  -webkit-user-select: none !important; /* Chrome, Opera and Safari*/
+  -ms-user-select: none !important; /* IE, ms-edge */
+}
 .padding-top5 {
   padding-top: 5px;
 }
@@ -160,6 +166,9 @@ margin-right: 0px;
   }
   .m-padding-bottom10 {
     padding-bottom: 10px;
+  }
+  .m-padding-bottom15 {
+    padding-bottom: 15px;
   }
   .m-padding-left30 {
     padding-left: 30px;
