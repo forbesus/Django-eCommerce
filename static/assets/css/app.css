@@ -1,3 +1,9 @@
+.disable-select {
+  user-select: none !important; /* standerd */
+  -moz-user-select: none !important; /* firefox specific */
+  -webkit-user-select: none !important; /* Chrome, Opera and Safari*/
+  -ms-user-select: none !important; /* IE, ms-edge */
+}
 .padding-top5 {
   padding-top: 5px;
 }
