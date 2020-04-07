@@ -62,7 +62,7 @@ def register_customer(request):
 def get_all_customers(request):
     if request.method == 'GET':
         instance_objects = CustomerStatus.objects.filter(customer__user_map_id=USER_ID).select_related() \
-            .order_by('-customer__created_at')
+            .order_by('-customer__name')
         return render(request, 'view_all_customers.html', {'objects': instance_objects})
     return redirect('dashboard')
 
