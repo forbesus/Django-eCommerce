@@ -1,5 +1,14 @@
 {% extends 'index.html' %}
 {% load humanize %}
+{% block styles %}
+<style>
+    tbody tr:hover {
+    background-color: #da8cff !important;
+    background-image: linear-gradient(to right, #da8cff, #9a55ff) !important;
+    color: white !important;
+    }
+</style>
+{% endblock %}
 {% block index %}
 <title>Customers</title>
 <div class="page-header">
@@ -38,7 +47,8 @@
                 </thead>
                 <tbody>
                 {% for object in objects %}
-                <tr onclick="window.location='{% url 'get_customer_details' customer_id=object.customer.id %}';" class="cursor-pointer">
+                <tr onclick="window.location='{% url 'get_customer_details' customer_id=object.customer.id %}';"
+                    class="cursor-pointer">
                     <td class="py-1">
                         {% if object.customer.gender == 'M' %}
                         <img src="{{baseImages}}/faces-clipart/pic-1.png" alt="image">
@@ -76,7 +86,7 @@
 </div>
 {% endblock %}
 {% block scripts %}
-    <script>
+<script>
     function sortTable(n) {
           var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
           table = document.getElementById("myTable");
@@ -170,6 +180,6 @@
           }
         }
      }
-    </script>
-    {% endblock %}
+</script>
+{% endblock %}
 
