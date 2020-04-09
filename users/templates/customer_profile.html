@@ -1,5 +1,12 @@
 {% extends 'index.html' %}
 {% load humanize %}
+{% block styles %}
+<style>
+    .btn-outline-primary:hover, .btn-outline-primary:focus, .btn-outline-primary:active {
+    color : white !important;
+    }
+</style>
+{% endblock %}
 {% block index %}
 <title>Customer Profile</title>
 <div class="page-header">
@@ -93,6 +100,12 @@
                             <i class="mdi mdi-home-map-marker icon-list text-primary"></i>&nbsp;
                             Address - {{object.customer.address}}
                         </div>
+                        <div class="col-lg-12 col-md-12 col-12 padding-bottom15 text-center">
+                            <button type="button"
+                                    class="btn btn-sm btn-outline-primary btn-fw">
+                                Edit Basic Details
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div id="tab-2" class="tabcontent">
@@ -124,6 +137,10 @@
                         <div class="col-lg-12 col-md-12 col-12 padding-bottom15">
                             <i class="mdi mdi-cash icon-list text-primary"></i>&nbsp;
                             Fees Remaining - ₹ {{object.fees_remaining|intcomma}}
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-12 padding-bottom15 text-center">
+                            <button type="button" class="btn btn-sm btn-outline-primary btn-fw">Edit Status Details
+                            </button>
                         </div>
                     </div>
                 </div>
