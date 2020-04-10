@@ -41,6 +41,30 @@ class UserAuth(models.Model):
     user_id = models.IntegerField(primary_key=True)
     username = models.CharField(max_length=100)
     password = models.CharField(max_length=100)
+    current_status = models.BooleanField(default=False)
 
     def __str__(self):
         return f"User  : {self.user_id} . {self.username}"
+
+
+
+class OwnerData(models.Model):
+    owner_name = models.CharField(max_length=50)
+    owner_email = models.CharField(max_length=50)
+    owner_phone = models.CharField(max_length=20)
+    owner_address = models.CharField(max_length=100)
+    gym_address = models.CharField(max_length=100)
+    gym_id = models.CharField(max_length=50)
+
+    def get_gym_id(self):
+        return self.gym_id
+
+class OwnerStatus(models.Model):
+    gym_id = models.ForeignKey(OwnerData, models.CASCADE, editable=False)
+    created_at = models.DateField()
+    valid_till = models.DateField()
+    paid_fees = models.BooleanField(default=False)
+
+    def get_owner_status(self):
+        return self.paid_fees
+

@@ -10,3 +10,6 @@ def get_dashboard_data(user):
                 total_customers=instance_objects.count(),
                 total_revenue=instance_objects.aggregate(Sum('fees_paid'))['fees_paid__sum'])
     return data
+
+def auth_login(request):
+    return request.session['auth_login']
