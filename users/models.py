@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 
 Gender_Choices = (('M', 'Male'), ('F', 'Female'))
@@ -23,6 +25,7 @@ class User(models.Model):
 
 
 class UserAuth(models.Model):
+    token = models.CharField(default=str(uuid.uuid4), max_length=36, editable=False)
     username = models.CharField(max_length=100)
     password = models.CharField(max_length=100)
     user = models.ForeignKey(User, models.CASCADE)

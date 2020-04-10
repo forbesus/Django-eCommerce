@@ -1,8 +1,9 @@
 from django.contrib import messages
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect
 from users.forms import CustomerForm, CustomerStatusForm
 from users.models import CustomerStatus, Customer, UserAuth, User
-from users.validation import get_dashboard_data
+from users.validation import get_dashboard_data, is_authenticated, edit_customer_details_post, edit_customer_details_get
 
 
 def login(request):
@@ -12,21 +13,17 @@ def login(request):
         try:
             instance_user_auth = UserAuth.objects.get(username=username, password=password)
             request.session['user_id'] = instance_user_auth.user.id
-            request.session['auth_login'] = True
+            request.session['user_token'] = instance_user_auth.token
             return redirect('dashboard')
-        except:
+        except ObjectDoesNotExist:
             messages.error(request, 'Username or Password is incorrect')
     return render(request, 'login.html')
 
 
 def logout(request):
+    if not is_authenticated(request): redirect('user_login')
     try:
-        USER_ID = request.session['user_id']
-    except KeyError:
-        messages.info(request, "Please Login First")
-        return redirect('user_login')
-    try:
-        del request.session['auth_login']
+        del request.session['user_token']
         del request.session['user_id']
     except KeyError:
         pass
@@ -34,25 +31,19 @@ def logout(request):
 
 
 def dashboard(request):
-    try:
-        USER_ID = request.session['user_id']
-    except KeyError:
-        messages.info(request, "Please Login First")
-        return redirect('user_login')
-    data = get_dashboard_data(USER_ID)
+    if not is_authenticated(request): return redirect('user_login')
+    user_id = request.session['user_id']
+    data = get_dashboard_data(user_id)
     return render(request, 'dashboard.html', {'data': data})
 
 
 def register_customer(request):
-    try:
-        USER_ID = request.session['user_id']
-    except KeyError:
-        messages.info(request, "Please Login First")
-        return redirect('user_login')
+    if not is_authenticated(request): return redirect('user_login')
+    user_id = request.session['user_id']
     page = 'register'
     if request.method == 'POST':
         if 'cancel' in request.POST: return redirect('dashboard')
-        instance = Customer(user=User.objects.get(id=USER_ID))
+        instance = Customer(user=User.objects.get(id=user_id))
         form_basic = CustomerForm(data=request.POST, instance=instance)
         form_status = CustomerStatusForm(request.POST)
         if form_basic.is_valid() and form_status.is_valid():
@@ -72,52 +63,42 @@ def register_customer(request):
 
 
 def get_all_customers(request):
-    try:
-        USER_ID = request.session['user_id']
-    except KeyError:
-        messages.info(request, "Please Login First")
-        return redirect('user_login')
+    if not is_authenticated(request): return redirect('user_login')
+    user_id = request.session['user_id']
     if request.method == 'GET':
-        instance_objects = CustomerStatus.objects.filter(customer__user=USER_ID).select_related() \
+        instance_objects = CustomerStatus.objects.filter(customer__user=user_id).select_related() \
             .order_by('customer__name')
         return render(request, 'view_all_customers.html', {'objects': instance_objects})
     return redirect('dashboard')
 
 
 def get_customer_details(request, customer_id):
-    try:
-        USER_ID = request.session['user_id']
-    except KeyError:
-        messages.info(request, "Please Login First")
-        return redirect('user_login')
+    if not is_authenticated(request): return redirect('user_login')
+    user_id = request.session['user_id']
     instance_object = CustomerStatus.objects.filter(customer__id=customer_id).select_related()
     return render(request, 'customer_profile.html', {'object': instance_object[0]})
 
 
 def edit_customer_details(request, customer_id, edit_type):
-    try:
-        USER_ID = request.session['user_id']
-    except KeyError:
-        messages.info(request, "Please Login First")
-        return redirect('user_login')
-    page = 'update'
+    if not is_authenticated(request): return redirect('user_login')
+    user_id = request.session['user_id']
     if request.method == 'POST':
         if 'cancel' in request.POST: return redirect('get_customer_details', customer_id=customer_id)
-        if edit_type == 'basic':
-            instance_object_basic = Customer.objects.filter(id=customer_id)
-            print(instance_object_basic.values())
-        elif edit_type == 'status':
-            instance_object_status = CustomerStatus.objects.filter(customer__id=customer_id)
-            print(instance_object_status.values())
-        messages.success(request, 'Successfully Updated')
-        return redirect('get_customer_details', customer_id=customer_id)
+        return edit_customer_details_post(request, customer_id, edit_type)
     else:
-        instance_object_basic = Customer.objects.filter(id=customer_id)
-        instance_object_status = CustomerStatus.objects.filter(customer__id=customer_id)
-        form_basic = CustomerForm(initial=instance_object_basic.values()[0])
-        form_status = CustomerStatusForm(initial=instance_object_status.values()[0])
-        return render(request, 'register.html',
-                      {'form_basic': form_basic, 'form_status': form_status, 'page': page, 'edit_type': edit_type})
+        return edit_customer_details_get(request, customer_id, edit_type)
+
+
+def delete_customer_details(request, customer_id):
+    if not is_authenticated(request): return redirect('user_login')
+    user_id = request.session['user_id']
+    try:
+        instance_object = Customer.objects.filter(id=customer_id).delete()
+        messages.success(request,'Customer deleted successfully')
+        return redirect('get_all_customers')
+    except Exception:
+        messages.error(request, 'Something went wrong')
+        return redirect('get_customer_details', customer_id=customer_id)
 
 
 def error404(request, exception):
