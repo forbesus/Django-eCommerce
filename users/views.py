@@ -23,6 +23,7 @@ def login(request):
             messages.error(request, 'Username or Password is incorrect')
             return render(request, 'login.html')
 
+
 def logout(request):
     try:
         del request.session['auth_login']
@@ -38,6 +39,7 @@ def dashboard(request):
 
 
 def register_customer(request):
+    page = 'register'
     if request.method == 'POST':
         if 'cancel' in request.POST: return redirect('dashboard')
         instance = Customer(user_map_id=USER_ID)
@@ -56,7 +58,7 @@ def register_customer(request):
     else:
         form_basic = CustomerForm()
         form_status = CustomerStatusForm()
-    return render(request, 'register.html', {'form_basic': form_basic, 'form_status': form_status})
+    return render(request, 'register.html', {'form_basic': form_basic, 'form_status': form_status, 'page': page})
 
 
 def get_all_customers(request):
@@ -70,6 +72,27 @@ def get_all_customers(request):
 def get_customer_details(request, customer_id):
     instance_object = CustomerStatus.objects.filter(customer__id=customer_id).select_related()
     return render(request, 'customer_profile.html', {'object': instance_object[0]})
+
+
+def edit_customer_details(request, customer_id, edit_type):
+    page = 'update'
+    if request.method == 'POST':
+        if 'cancel' in request.POST: return redirect('get_customer_details', customer_id=customer_id)
+        if edit_type == 'basic':
+            instance_object_basic = Customer.objects.filter(id=customer_id)
+            print(instance_object_basic.values())
+        elif edit_type == 'status':
+            instance_object_status = CustomerStatus.objects.filter(customer__id=customer_id)
+            print(instance_object_status.values())
+        messages.success(request, 'Successfully Updated')
+        return redirect('get_customer_details', customer_id=customer_id)
+    else:
+        instance_object_basic = Customer.objects.filter(id=customer_id)
+        instance_object_status = CustomerStatus.objects.filter(customer__id=customer_id)
+        form_basic = CustomerForm(initial=instance_object_basic.values()[0])
+        form_status = CustomerStatusForm(initial=instance_object_status.values()[0])
+        return render(request, 'register.html',
+                      {'form_basic': form_basic, 'form_status': form_status, 'page': page, 'edit_type': edit_type})
 
 
 def error404(request, exception):
