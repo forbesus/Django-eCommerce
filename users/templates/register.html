@@ -39,14 +39,14 @@
                                     <div class="form-check">
                                         <label class="form-check-label">
                                             <input type="radio" class="form-check-input" name="status"
-                                                   id="membershipRadios1" value="1" checked> Active </label>
+                                                   id="membershipRadios1" value="1" {% if status %} checked {% endif %}> Active </label>
                                     </div>
                                 </div>
                                 <div class="col-sm-5">
                                     <div class="form-check">
                                         <label class="form-check-label">
                                             <input type="radio" class="form-check-input" name="status"
-                                                   id="membershipRadios2" value="0" checked> Inactive </label>
+                                                   id="membershipRadios2" value="0" {% if not status %} checked {% endif %}> Inactive </label>
                                     </div>
                                 </div>
                             </div>
@@ -63,7 +63,7 @@
                     {% if page == 'register' %}
                     <button type="submit" form="form" formaction="{% url 'register_customer' %}" formmethod="post" class="btn btn-gradient-primary mr-2">Submit</button>
                     {% elif page == 'update' %}
-                     <button type="submit" form="form" formaction="{% url 'edit_customer_details' customer_id=4 edit_type=edit_type  %}" formmethod="post" class="btn btn-gradient-primary mr-2">Update</button>
+                     <button type="submit" form="form" formaction="{% url 'edit_customer_details' customer_id=customer_id edit_type=edit_type  %}" formmethod="post" class="btn btn-gradient-primary mr-2">Update</button>
                     {% endif %}
                     <button class="btn btn-light" formnovalidate name="cancel" value="cancel">Cancel</button>
                 </form>
