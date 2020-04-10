@@ -6,10 +6,7 @@ from users.validation import get_dashboard_data
 
 
 def login(request):
-    if request.method == 'GET':
-        messages.info(request, "Please Login")
-        return render(request, 'login.html')
-    else:
+    if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
         try:
@@ -19,10 +16,15 @@ def login(request):
             return redirect('dashboard')
         except:
             messages.error(request, 'Username or Password is incorrect')
-            return render(request, 'login.html')
+    return render(request, 'login.html')
 
 
 def logout(request):
+    try:
+        USER_ID = request.session['user_id']
+    except KeyError:
+        messages.info(request, "Please Login First")
+        return redirect('user_login')
     try:
         del request.session['auth_login']
         del request.session['user_id']
@@ -32,13 +34,21 @@ def logout(request):
 
 
 def dashboard(request):
-    USER_ID = request.session['user_id']
+    try:
+        USER_ID = request.session['user_id']
+    except KeyError:
+        messages.info(request, "Please Login First")
+        return redirect('user_login')
     data = get_dashboard_data(USER_ID)
     return render(request, 'dashboard.html', {'data': data})
 
 
 def register_customer(request):
-    USER_ID = request.session['user_id']
+    try:
+        USER_ID = request.session['user_id']
+    except KeyError:
+        messages.info(request, "Please Login First")
+        return redirect('user_login')
     page = 'register'
     if request.method == 'POST':
         if 'cancel' in request.POST: return redirect('dashboard')
@@ -62,7 +72,11 @@ def register_customer(request):
 
 
 def get_all_customers(request):
-    USER_ID = request.session['user_id']
+    try:
+        USER_ID = request.session['user_id']
+    except KeyError:
+        messages.info(request, "Please Login First")
+        return redirect('user_login')
     if request.method == 'GET':
         instance_objects = CustomerStatus.objects.filter(customer__user=USER_ID).select_related() \
             .order_by('customer__name')
@@ -71,11 +85,21 @@ def get_all_customers(request):
 
 
 def get_customer_details(request, customer_id):
+    try:
+        USER_ID = request.session['user_id']
+    except KeyError:
+        messages.info(request, "Please Login First")
+        return redirect('user_login')
     instance_object = CustomerStatus.objects.filter(customer__id=customer_id).select_related()
     return render(request, 'customer_profile.html', {'object': instance_object[0]})
 
 
 def edit_customer_details(request, customer_id, edit_type):
+    try:
+        USER_ID = request.session['user_id']
+    except KeyError:
+        messages.info(request, "Please Login First")
+        return redirect('user_login')
     page = 'update'
     if request.method == 'POST':
         if 'cancel' in request.POST: return redirect('get_customer_details', customer_id=customer_id)
