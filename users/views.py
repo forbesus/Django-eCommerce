@@ -1,10 +1,8 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from users.forms import CustomerForm, CustomerStatusForm
-from users.models import CustomerStatus, Customer, UserAuth
+from users.models import CustomerStatus, Customer, UserAuth, User
 from users.validation import get_dashboard_data
-
-USER_ID = 1
 
 
 def login(request):
@@ -15,8 +13,8 @@ def login(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         try:
-            user = UserAuth.objects.get(username=username, password=password)
-            request.session['user_id'] = user.user_id
+            instance_user_auth = UserAuth.objects.get(username=username, password=password)
+            request.session['user_id'] = instance_user_auth.user.id
             request.session['auth_login'] = True
             return redirect('dashboard')
         except:
@@ -34,15 +32,17 @@ def logout(request):
 
 
 def dashboard(request):
+    USER_ID = request.session['user_id']
     data = get_dashboard_data(USER_ID)
     return render(request, 'dashboard.html', {'data': data})
 
 
 def register_customer(request):
+    USER_ID = request.session['user_id']
     page = 'register'
     if request.method == 'POST':
         if 'cancel' in request.POST: return redirect('dashboard')
-        instance = Customer(user_map_id=USER_ID)
+        instance = Customer(user=User.objects.get(id=USER_ID))
         form_basic = CustomerForm(data=request.POST, instance=instance)
         form_status = CustomerStatusForm(request.POST)
         if form_basic.is_valid() and form_status.is_valid():
@@ -62,8 +62,9 @@ def register_customer(request):
 
 
 def get_all_customers(request):
+    USER_ID = request.session['user_id']
     if request.method == 'GET':
-        instance_objects = CustomerStatus.objects.filter(customer__user_map_id=USER_ID).select_related() \
+        instance_objects = CustomerStatus.objects.filter(customer__user=USER_ID).select_related() \
             .order_by('customer__name')
         return render(request, 'view_all_customers.html', {'objects': instance_objects})
     return redirect('dashboard')
