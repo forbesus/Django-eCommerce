@@ -1,14 +1,24 @@
 import datetime
 
 from django import forms
+from django.forms import Select
 
 from users.models import Customer, CustomerStatus
 
-Gender_Choices = (('M', 'Male'), ('F', 'Female'))
+Gender_Choices = ((None, 'Select the Gender'), ('M', 'Male'), ('F', 'Female'))
 
 
 class DateInput(forms.DateInput):
     input_type = 'date'
+
+
+class Select(Select):
+    def create_option(self, *args, **kwargs):
+        option = super().create_option(*args, **kwargs)
+        if not option.get('value'):
+            option['attrs']['disabled'] = True
+            option['attrs']['hidden'] = True
+        return option
 
 
 class CustomerForm(forms.ModelForm):
@@ -29,8 +39,9 @@ class CustomerForm(forms.ModelForm):
                           widget=DateInput(attrs={'class': 'form-control'}),
                           required=True)
     gender = forms.ChoiceField(label='Gender',
+                               initial='',
                                choices=Gender_Choices,
-                               widget=forms.Select(attrs={'class': 'form-control'}),
+                               widget=Select(attrs={'class': 'form-control'}),
                                required=True
                                )
     proof_id_no = forms.CharField(label='Adhar No',

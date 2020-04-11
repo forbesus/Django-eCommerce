@@ -1,12 +1,13 @@
 import datetime
 
+from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Sum
 from django.shortcuts import render, redirect
+from django.utils import timezone
 
 from users.forms import CustomerForm, CustomerStatusForm
-from users.models import CustomerStatus, User, UserAuth, Customer
-from django.contrib import messages
+from users.models import CustomerStatus, UserAuth, Customer
 
 
 def is_authenticated(request):
@@ -34,15 +35,16 @@ def get_dashboard_data(user):
 
 def edit_customer_details_get(request, customer_id, edit_type):
     page = 'update'
+    user_id = request.session['user_id']
     if edit_type == 'basic':
-        instance_object_basic = Customer.objects.filter(id=customer_id)
-        form_basic = CustomerForm(initial=instance_object_basic.values()[0])
+        instance_object_basic = Customer.objects.get(id=customer_id, user=user_id)
+        form_basic = CustomerForm(initial=instance_object_basic.__dict__)
         return render(request, 'register.html',
                       {'form_basic': form_basic, 'page': page, 'customer_id': customer_id, 'edit_type': edit_type})
     elif edit_type == 'status':
-        instance_object_status = CustomerStatus.objects.filter(customer__id=customer_id)
-        status = instance_object_status.values()[0].get('status')
-        form_status = CustomerStatusForm(initial=instance_object_status.values()[0])
+        instance_object_status = CustomerStatus.objects.get(customer__id=customer_id, customer__user=user_id)
+        status = instance_object_status.status
+        form_status = CustomerStatusForm(initial=instance_object_status.__dict__̥̥)
         return render(request, 'register.html',
                       {'form_status': form_status, 'page': page, 'customer_id': customer_id, 'edit_type': edit_type,
                        'status': status})
@@ -50,24 +52,29 @@ def edit_customer_details_get(request, customer_id, edit_type):
 
 def edit_customer_details_post(request, customer_id, edit_type):
     page = 'update'
+    user_id = request.session['user_id']
     if edit_type == 'basic':
-        instance_object_basic = Customer.objects.filter(id=customer_id)
-        updated_instance = update_customer_data(instance_object_basic.values()[0], request.POST)
+        instance_object_basic = Customer.objects.get(id=customer_id, user=user_id)
+        updated_instance = update_customer_data(instance_object_basic.__dict__, request.POST)
         if updated_instance:
             try:
-                instance_object_basic.update(**updated_instance)
-                messages.info(request, 'Successfully updated')
-            except Exception:
+                for attr, val in updated_instance.items():
+                    setattr(instance_object_basic, attr, val)
+                instance_object_basic.save()
+            except Exception as err:
+                print(err)
                 messages.error(request, 'Something went wrong')
         else:
             messages.info(request, 'Nothing to update')
     elif edit_type == 'status':
-        instance_object_status = CustomerStatus.objects.filter(customer__id=customer_id)
-        updated_instance = update_customer_data(instance_object_status.values()[0], request.POST)
+        instance_object_status = CustomerStatus.objects.get(customer__id=customer_id, customer__user=user_id)
+        updated_instance = update_customer_data(instance_object_status.__dict__, request.POST)
         if updated_instance:
+            updated_instance['updated_at'] = timezone.now()
             try:
-                instance_object_status.update(**updated_instance)
-                messages.info(request, 'Successfully updated')
+                for attr, val in updated_instance.items():
+                    setattr(instance_object_status, attr, val)
+                instance_object_status.save()
             except Exception:
                 messages.error(request, 'Something went wrong')
         else:
@@ -81,8 +88,6 @@ def update_customer_data(current, updated):
         u_val = updated.get(key)
         if key in ('dob', 'start_date', 'end_date'):
             u_val = datetime.datetime.strptime(u_val, "%Y-%m-%d").date()
-        if key in ('total_fees', 'fees_paid', 'fees_remaining', 'status'):
-            u_val = int(u_val)
         if key in updated and val != u_val:
             update_dict.update({key: u_val})
     return update_dict
