@@ -44,7 +44,7 @@ def edit_customer_details_get(request, customer_id, edit_type):
     elif edit_type == 'status':
         instance_object_status = CustomerStatus.objects.get(customer__id=customer_id, customer__user=user_id)
         status = instance_object_status.status
-        form_status = CustomerStatusForm(initial=instance_object_status.__dict__̥̥)
+        form_status = CustomerStatusForm(initial=instance_object_status.__dict__)
         return render(request, 'register.html',
                       {'form_status': form_status, 'page': page, 'customer_id': customer_id, 'edit_type': edit_type,
                        'status': status})
