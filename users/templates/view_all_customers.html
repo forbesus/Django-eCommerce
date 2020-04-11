@@ -8,6 +8,7 @@
     color: white !important;
     }
 
+
 </style>
 {% endblock %}
 {% block index %}
@@ -19,7 +20,7 @@
                 </span> All Customer </h3>
     <nav aria-label="breadcrumb">
         <ul class="breadcrumb">
-            <li class="breadcrumb-item active" aria-current="page">
+            <li aria-current="page" class="breadcrumb-item active">
                 <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
             </li>
         </ul>
@@ -38,10 +39,10 @@
                     <div class="input-group-prepend bg-transparent">
                         <i class="input-group-text bg-transparent icon-sm border-0 mdi mdi-magnify"></i>
                     </div>
-                    <input type="text" id="searchInput" onkeyup="searchTable()"
-                           class="form-control bg-transparent border-0"
+                    <input autocomplete="off" class="form-control bg-transparent border-0" id="searchInput"
+                           onkeyup="searchTable()"
                            placeholder="Search Customer"
-                           autocomplete="off">
+                           type="text">
                 </div>
             </div>
             <div class="col-lg-6 col-md-6 col-12">
@@ -49,30 +50,30 @@
             </div>
         </div>
         <div class="overflow-auto">
-            <table id="myTable" class="table table-striped disable-select">
+            <table class="table table-striped disable-select" id="myTable">
                 <thead>
                 <tr>
-                    <th onclick="sortTable(0)" class="cursor-pointer"> User</th>
-                    <th onclick="sortTable(1)" class="cursor-pointer"> Customer Name</th>
-                    <th onclick="sortTable(2)" class="cursor-pointer"> Status</th>
-                    <th onclick="sortTable(3)" class="text-right cursor-pointer"> Total Fees</th>
-                    <th onclick="sortTable(4)" class="text-right cursor-pointer"> Fees Paid</th>
-                    <th onclick="sortTable(5)" class="text-right cursor-pointer"> Fees Remain</th>
-                    <th onclick="sortTable(6)" class="cursor-pointer"> Started Date</th>
-                    <th onclick="sortTable(7)" class="cursor-pointer"> Closing Date</th>
+                    <th class="cursor-pointer" onclick="sortTable(0)"> User</th>
+                    <th class="cursor-pointer" onclick="sortTable(1)"> Customer Name</th>
+                    <th class="cursor-pointer" onclick="sortTable(2)"> Status</th>
+                    <th class="text-right cursor-pointer" onclick="sortTable(3)"> Total Fees</th>
+                    <th class="text-right cursor-pointer" onclick="sortTable(4)"> Fees Paid</th>
+                    <th class="text-right cursor-pointer" onclick="sortTable(5)"> Fees Remain</th>
+                    <th class="cursor-pointer" onclick="sortTable(6)"> Started Date</th>
+                    <th class="cursor-pointer" onclick="sortTable(7)"> Closing Date</th>
                     <!--                    <th> Progress</th>-->
                 </tr>
                 </thead>
                 <tbody>
                 {% for object in objects %}
-                <tr onclick="window.location='{% url 'get_customer_details' customer_id=object.customer.id %}';"
-                    class="cursor-pointer">
+                <tr class="cursor-pointer"
+                    onclick="window.location='{% url 'get_customer_details' customer_id=object.customer.id %}';">
                     <td class="py-1">
                         {% if object.customer.gender == 'M' %}
-                        <img src="{{baseImages}}/faces-clipart/pic-1.png" alt="image">
+                        <img alt="image" src="{{baseImages}}/faces-clipart/pic-1.png">
                         {% endif %}
                         {% if object.customer.gender == 'F' %}
-                        <img src="{{baseImages}}/faces-clipart/pic-2.png" alt="image">
+                        <img alt="image" src="{{baseImages}}/faces-clipart/pic-2.png">
                         {% endif %}
                     </td>
                     <td>{{object.customer.name}}</td>

@@ -79,13 +79,12 @@ def get_all_customers(request):
 def get_customer_details(request, customer_id):
     if not is_authenticated(request): return redirect('user_login')
     user_id = request.session['user_id']
-    instance_object = CustomerStatus.objects.filter(customer__id=customer_id).select_related()
+    instance_object = CustomerStatus.objects.filter(customer__id=customer_id,customer__user=user_id).select_related()
     return render(request, 'customer_profile.html', {'object': instance_object[0]})
 
 
 def edit_customer_details(request, customer_id, edit_type):
     if not is_authenticated(request): return redirect('user_login')
-    user_id = request.session['user_id']
     if request.method == 'POST':
         if 'cancel' in request.POST: return redirect('get_customer_details', customer_id=customer_id)
         return edit_customer_details_post(request, customer_id, edit_type)
@@ -97,10 +96,10 @@ def delete_customer_details(request, customer_id):
     if not is_authenticated(request): return redirect('user_login')
     user_id = request.session['user_id']
     try:
-        instance_object = Customer.objects.filter(id=customer_id).delete()
+        Customer.objects.get(id=customer_id,user=user_id).delete()
         messages.success(request,'Customer deleted successfully')
         return redirect('get_all_customers')
-    except Exception:
+    except ObjectDoesNotExist:
         messages.error(request, 'Something went wrong')
         return redirect('get_customer_details', customer_id=customer_id)
 

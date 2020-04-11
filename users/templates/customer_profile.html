@@ -126,12 +126,12 @@
                 <div id="tab-2" class="tabcontent">
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-12 padding-bottom15">
-                            <i class="mdi mdi-information icon-list text-primary"></i>&nbsp;
-                            Status - {% if object.status %}Active{% else %}Inactive{% endif %}
+                            <i class="mdi mdi-clock-alert  icon-list text-primary"></i>&nbsp;
+                            Updated {{object.updated_at |naturaltime}}
                         </div>
                         <div class="col-lg-12 col-md-12 col-12 padding-bottom15">
-                            <i class="mdi mdi-clock-alert  icon-list text-primary"></i>&nbsp;
-                            Status updated on - {{object.updated_at | date}}
+                            <i class="mdi mdi-information icon-list text-primary"></i>&nbsp;
+                            Status - {% if object.status %}Active{% else %}Inactive{% endif %}
                         </div>
                         <div class="col-lg-12 col-md-12 col-12 padding-bottom15">
                             <i class="mdi mdi-calendar-plus icon-list text-primary"></i>&nbsp;
