@@ -12,6 +12,10 @@ def login(request):
         password = request.POST.get('password')
         try:
             instance_user_auth = UserAuth.objects.get(username=username, password=password)
+            if request.POST.get('stay_login'):
+                request.session.set_expiry(None)
+            else:
+                request.session.set_expiry(600)
             request.session['user_id'] = instance_user_auth.user.id
             request.session['user_token'] = instance_user_auth.token
             return redirect('dashboard')
