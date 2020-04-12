@@ -36,18 +36,22 @@ def get_dashboard_data(user):
 def edit_customer_details_get(request, customer_id, edit_type):
     page = 'update'
     user_id = request.session['user_id']
+    user_object = {'name': request.session['user_name'],
+                   'gym_name': request.session['user_gym_name']
+                   }
     if edit_type == 'basic':
         instance_object_basic = Customer.objects.get(id=customer_id, user=user_id)
         form_basic = CustomerForm(initial=instance_object_basic.__dict__)
         return render(request, 'register.html',
-                      {'form_basic': form_basic, 'page': page, 'customer_id': customer_id, 'edit_type': edit_type})
+                      {'form_basic': form_basic, 'page': page, 'customer_id': customer_id, 'edit_type': edit_type,
+                       'user': user_object})
     elif edit_type == 'status':
         instance_object_status = CustomerStatus.objects.get(customer__id=customer_id, customer__user=user_id)
         status = instance_object_status.status
         form_status = CustomerStatusForm(initial=instance_object_status.__dict__)
         return render(request, 'register.html',
                       {'form_status': form_status, 'page': page, 'customer_id': customer_id, 'edit_type': edit_type,
-                       'status': status})
+                       'status': status, 'user': user_object})
 
 
 def edit_customer_details_post(request, customer_id, edit_type):
@@ -61,8 +65,8 @@ def edit_customer_details_post(request, customer_id, edit_type):
                 for attr, val in updated_instance.items():
                     setattr(instance_object_basic, attr, val)
                 instance_object_basic.save()
-            except Exception as err:
-                print(err)
+                messages.success(request, 'Customer updated successfully')
+            except Exception:
                 messages.error(request, 'Something went wrong')
         else:
             messages.info(request, 'Nothing to update')
@@ -75,6 +79,7 @@ def edit_customer_details_post(request, customer_id, edit_type):
                 for attr, val in updated_instance.items():
                     setattr(instance_object_status, attr, val)
                 instance_object_status.save()
+                messages.success(request, 'Customer updated successfully')
             except Exception:
                 messages.error(request, 'Something went wrong')
         else:
@@ -88,6 +93,8 @@ def update_customer_data(current, updated):
         u_val = updated.get(key)
         if key in ('dob', 'start_date', 'end_date'):
             u_val = datetime.datetime.strptime(u_val, "%Y-%m-%d").date()
+        if key in ('total_fees', 'fees_paid', 'fees_remaining', 'status'):
+            u_val = int(u_val)
         if key in updated and val != u_val:
             update_dict.update({key: u_val})
     return update_dict

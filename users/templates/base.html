@@ -31,6 +31,20 @@
         $('#deletesuccess').delay(1000).fadeOut();
       });
 </script>
+<script type="text/javascript">
+    function changeClass(){
+       var element = document.getElementById('fullscreen-button');
+       if(element.classList.contains("mdi-fullscreen")){
+          element.classList.remove("mdi-fullscreen");
+          element.classList.add("mdi-fullscreen-exit");
+       }
+       else
+       {
+          element.classList.remove("mdi-fullscreen-exit");
+          element.classList.add("mdi-fullscreen");
+       }
+    }
+</script>
 {% block scripts %}
 
 
