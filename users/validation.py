@@ -14,6 +14,8 @@ def is_authenticated(request):
     try:
         user_id = request.session['user_id']
         user_token = request.session['user_token']
+        request.session['user_name']
+        request.session['user_gym_name']
         UserAuth.objects.get(user__id=user_id, token=user_token)
         return True
     except KeyError:
