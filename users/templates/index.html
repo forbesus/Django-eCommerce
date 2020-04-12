@@ -173,7 +173,8 @@
                             <span class="login-status online"></span>
                             <!--change to offline or busy as needed-->
                         </div>
-                        <div class="nav-profile-text d-flex flex-column">
+                        <div onclick="window.location='{% url 'get_user' user_id=user.id %}'"
+                             class="nav-profile-text d-flex flex-column">
                             <span class="font-weight-bold mb-2">{{user.name}}</span>
                             <span class="text-secondary text-small">{{user.gym_name}}</span>
                         </div>
@@ -195,7 +196,7 @@
                     </a>
                     <div class="collapse" id="ui-basic">
                         <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"><a class="nav-link" href="{% url 'register_customer' %}">Register
+                            <li class="nav-item"><a class="nav-link" href="{% url 'post_customer' %}">Register
                                 New</a>
                             </li>
                             <li class="nav-item"><a class="nav-link"

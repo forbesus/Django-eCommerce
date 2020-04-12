@@ -22,7 +22,7 @@
                             {{msg}}
                         </div>
                         {% endfor %}
-                        <form class="pt-3" action="{% url 'user_login' %}" method="post">
+                        <form class="pt-3" action="{% url 'login' %}" method="post">
                             {% csrf_token %}
                             <div class="form-group">
                                 <input type="text" class="form-control form-control-lg" id="exampleInputEmail1"
