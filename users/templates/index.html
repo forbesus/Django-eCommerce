@@ -174,8 +174,8 @@
                             <!--change to offline or busy as needed-->
                         </div>
                         <div class="nav-profile-text d-flex flex-column">
-                            <span class="font-weight-bold mb-2">David Grey. H</span>
-                            <span class="text-secondary text-small">Project Manager</span>
+                            <span class="font-weight-bold mb-2">{{user.name}}</span>
+                            <span class="text-secondary text-small">{{user.gym_name}}</span>
                         </div>
                         <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
                     </a>
@@ -300,20 +300,4 @@
     </div>
     <!-- page-body-wrapper ends -->
 </div>
-{% endblock %}
-{% block scripts %}
-<script type="text/javascript">
-    function changeClass(){
-       var element = document.getElementById('fullscreen-button');
-       if(element.classList.contains("mdi-fullscreen")){
-          element.classList.remove("mdi-fullscreen");
-          element.classList.add("mdi-fullscreen-exit");
-       }
-       else
-       {
-          element.classList.remove("mdi-fullscreen-exit");
-          element.classList.add("mdi-fullscreen");
-       }
-    }
-</script>
 {% endblock %}
