@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 from django.utils import timezone
 
 from users.forms import CustomerForm, CustomerStatusForm
-from users.models import CustomerStatus, UserAuth, Customer
+from users.models import CustomerStatus, UserAuth, Customer, User
 
 
 def is_authenticated(request):
@@ -26,6 +26,14 @@ def is_authenticated(request):
         return False
 
 
+def set_login_session(instance_user_auth, request):
+    request.session['user_id'] = instance_user_auth.user.id
+    request.session['user_token'] = instance_user_auth.token
+    user = User.objects.get(id=instance_user_auth.user.id)
+    request.session['user_name'] = user.name
+    request.session['user_gym_name'] = user.gym_name
+
+
 def get_dashboard_data(user):
     data = {}
     instance_objects = CustomerStatus.objects.filter(customer__user=user).select_related()
@@ -35,33 +43,49 @@ def get_dashboard_data(user):
     return data
 
 
-def edit_customer_details_get(request, customer_id, edit_type):
+def get_user_data(request):
+    user_object = {
+        'id': request.session['user_id'],
+        'name': request.session['user_name'],
+        'gym_name': request.session['user_gym_name']
+    }
+    return user_object
+
+
+def post_customer_save(form_basic, request):
+    try:
+        form_basic = form_basic.save(commit=True)
+        instance = CustomerStatus(customer=form_basic, status=request.POST.get('status'))
+        CustomerStatusForm(data=request.POST, instance=instance).save(commit=True)
+        messages.success(request, 'Successfully Registered')
+    except Exception as err:
+        messages.error(request, 'Something Went Wrong :' + str(err))
+
+
+def put_customer_get(request, customer_id, edit_type):
     page = 'update'
     user_id = request.session['user_id']
-    user_object = {'name': request.session['user_name'],
-                   'gym_name': request.session['user_gym_name']
-                   }
     if edit_type == 'basic':
         instance_object_basic = Customer.objects.get(id=customer_id, user=user_id)
         form_basic = CustomerForm(initial=instance_object_basic.__dict__)
-        return render(request, 'register.html',
+        return render(request, 'customer_register.html',
                       {'form_basic': form_basic, 'page': page, 'customer_id': customer_id, 'edit_type': edit_type,
-                       'user': user_object})
+                       'user': get_user_data(request)})
     elif edit_type == 'status':
         instance_object_status = CustomerStatus.objects.get(customer__id=customer_id, customer__user=user_id)
         status = instance_object_status.status
         form_status = CustomerStatusForm(initial=instance_object_status.__dict__)
-        return render(request, 'register.html',
+        return render(request, 'customer_register.html',
                       {'form_status': form_status, 'page': page, 'customer_id': customer_id, 'edit_type': edit_type,
-                       'status': status, 'user': user_object})
+                       'status': status, 'user': get_user_data(request)})
 
 
-def edit_customer_details_post(request, customer_id, edit_type):
+def put_customer_post(request, customer_id, edit_type):
     page = 'update'
     user_id = request.session['user_id']
     if edit_type == 'basic':
         instance_object_basic = Customer.objects.get(id=customer_id, user=user_id)
-        updated_instance = update_customer_data(instance_object_basic.__dict__, request.POST)
+        updated_instance = get_updated_fields(instance_object_basic.__dict__, request.POST)
         if updated_instance:
             try:
                 for attr, val in updated_instance.items():
@@ -74,7 +98,7 @@ def edit_customer_details_post(request, customer_id, edit_type):
             messages.info(request, 'Nothing to update')
     elif edit_type == 'status':
         instance_object_status = CustomerStatus.objects.get(customer__id=customer_id, customer__user=user_id)
-        updated_instance = update_customer_data(instance_object_status.__dict__, request.POST)
+        updated_instance = get_updated_fields(instance_object_status.__dict__, request.POST)
         if updated_instance:
             updated_instance['updated_at'] = timezone.now()
             try:
@@ -86,10 +110,10 @@ def edit_customer_details_post(request, customer_id, edit_type):
                 messages.error(request, 'Something went wrong')
         else:
             messages.info(request, 'Nothing to update')
-    return redirect('get_customer_details', customer_id=customer_id)
+    return redirect('get_customer', customer_id=customer_id)
 
 
-def update_customer_data(current, updated):
+def get_updated_fields(current, updated):
     update_dict = {}
     for key, val in current.items():
         u_val = updated.get(key)

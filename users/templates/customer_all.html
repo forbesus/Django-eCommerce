@@ -67,7 +67,7 @@
                 <tbody>
                 {% for object in objects %}
                 <tr class="cursor-pointer"
-                    onclick="window.location='{% url 'get_customer_details' customer_id=object.customer.id %}';">
+                    onclick="window.location='{% url 'get_customer' customer_id=object.customer.id %}';">
                     <td class="py-1">
                         {% if object.customer.gender == 'M' %}
                         <img alt="image" src="{{baseImages}}/faces-clipart/pic-1.png">
