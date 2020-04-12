@@ -6,7 +6,7 @@ from project_gymnasium import settings
 from users.forms import CustomerForm, CustomerStatusForm
 from users.models import CustomerStatus, Customer, UserAuth, User
 from users.validation import get_dashboard_data, is_authenticated, put_customer_post, \
-    put_customer_get, get_user_data, post_customer_save, set_login_session
+    put_customer_get, get_user_data, post_customer_save, set_login_session, get_user_data_list
 
 
 def error404(request, exception):
@@ -115,7 +115,7 @@ def delete_customer(request, customer_id):
 def get_user(request, user_id):
     if not is_authenticated(request): return redirect('login')
     if user_id == request.session['user_id']:
-        instance_object = User.objects.get(id=user_id).__dict__
+        instance_object = get_user_data_list(User.objects.get(id=user_id).__dict__)
         return render(request, 'user_profile.html', {'object': instance_object, 'user': get_user_data(request)})
     else:
         messages.error(request, 'Something went wrong')
