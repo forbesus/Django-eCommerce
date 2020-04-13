@@ -124,9 +124,3 @@ def get_updated_fields(current, updated):
         if key in updated and val != u_val:
             update_dict.update({key: u_val})
     return update_dict
-
-def get_user_data_list(instance_object):
-    data_list=list(instance_object.items())
-    for value in data_list:
-        value=list(value)
-    return instance_object
