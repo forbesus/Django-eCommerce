@@ -55,8 +55,11 @@
                 <img src="{{baseImages}}/faces-clipart/pic-2-m.png" alt="image">
                 {% endif %}
             </div>
-            <div class="col-lg-12 col-md-12 col-12 text-center font-size18 font-weight900 padding-bottom15">
+            <div class="col-lg-12 col-md-12 col-12 text-center font-size18 font-weight900 padding-bottom10">
                 {{object.name}}
+            </div>
+            <div class="col-lg-12 col-md-12 col-12 text-center text-muted font-size18 font-weight900 padding-bottom15">
+                {{object.gym_name}}
             </div>
         </div>
         <hr>
@@ -73,7 +76,6 @@
                             Status Details
                         </a>
                     </li>
-
                 </ul>
             </div>
 
@@ -95,12 +97,16 @@
                         </div>
                         {% endif %}
                         <div class="col-lg-12 col-md-12 col-12 padding-bottom15">
-                            <i class="mdi mdi-account-card-details icon-list text-primary"></i>&nbsp;
+                            <i class="mdi mdi-home-map-marker icon-list text-primary"></i>&nbsp;
+                            Address - {{object.address}}
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-12 padding-bottom15">
+                            <i class="mdi mdi-cellphone icon-list text-primary"></i>&nbsp;
                             Gym Contact No - {{object.gym_contact_no}}
                         </div>
                         <div class="col-lg-12 col-md-12 col-12 padding-bottom15">
                             <i class="mdi mdi-home-map-marker icon-list text-primary"></i>&nbsp;
-                            Address - {{object.address}}
+                           Gym Address - {{object.gym_address}}
                         </div>
                         <div class="col-lg-12 col-md-12 col-12 padding-bottom15 padding-top15 text-center">
                             <button type="button"
