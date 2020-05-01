@@ -9,6 +9,7 @@
     }
 
 
+
 </style>
 {% endblock %}
 {% block index %}
@@ -17,7 +18,13 @@
     <h3 class="page-title">
                 <span class="page-title-icon bg-gradient-primary text-white mr-2">
                   <i class="mdi mdi-account-multiple-outline"></i>
-                </span> All Customer </h3>
+                {% if request.GET.status == '0' %}
+                    </span> Inactive Customers </h3>
+                {% elif request.GET.status == '1' %}
+                    </span> Active Customers </h3>
+                {% else %}
+                    </span> All Customers </h3>
+                {% endif %}
     <nav aria-label="breadcrumb">
         <ul class="breadcrumb">
             <li aria-current="page" class="breadcrumb-item active">
@@ -104,8 +111,21 @@
         {% else %}
         <div class="row">
             <div class="col-lg-12 col-md-12 col-12 text-center text-muted">
-                No customers availables
+                No
+                {% if request.GET.status == '0' %}
+                    inactive
+                {% elif request.GET.status == '1' %}
+                    active
+                {% endif %}
+                customers available
             </div>
+            {% if not request.GET.status %}
+            <div class="col-lg-12 col-md-12 col-12 text-center text-muted pt-3">
+                <button onclick="window.location='{% url 'post_customer' %}'"
+                        class="btn btn-sm btn-gradient-primary">Register New
+                </button>
+            </div>
+            {% endif %}
         </div>
         {% endif %}
     </div>

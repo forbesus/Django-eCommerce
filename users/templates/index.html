@@ -199,6 +199,10 @@
                                 New</a>
                             </li>
                             <li class="nav-item"><a class="nav-link"
+                                                    href="{% url 'get_all_customers' %}?status=1">Active</a></li>
+                            <li class="nav-item"><a class="nav-link"
+                                                    href="{% url 'get_all_customers' %}?status=0">Inactive</a></li>
+                            <li class="nav-item"><a class="nav-link"
                                                     href="{% url 'get_all_customers' %}">View All</a></li>
                         </ul>
                     </div>

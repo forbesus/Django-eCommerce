@@ -80,6 +80,9 @@ def get_all_customers(request):
     if request.method == 'GET':
         instance_objects = CustomerStatus.objects.filter(customer__user=user_id).select_related() \
             .order_by('customer__name')
+        status = request.GET.get('status', None)
+        if status:
+            instance_objects=instance_objects.filter(status=status)
         return render(request, 'customer_all.html', {'objects': instance_objects, 'user': get_user_data(request)})
     return redirect('dashboard')
 
