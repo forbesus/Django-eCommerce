@@ -14,8 +14,6 @@ def is_authenticated(request):
     try:
         user_id = request.session['user_id']
         user_token = request.session['user_token']
-        request.session['user_name']
-        request.session['user_gym_name']
         UserAuth.objects.get(user__id=user_id, token=user_token)
         return True
     except KeyError:
@@ -29,9 +27,6 @@ def is_authenticated(request):
 def set_login_session(instance_user_auth, request):
     request.session['user_id'] = instance_user_auth.user.id
     request.session['user_token'] = instance_user_auth.token
-    user = User.objects.get(id=instance_user_auth.user.id)
-    request.session['user_name'] = user.name
-    request.session['user_gym_name'] = user.gym_name
 
 
 def get_dashboard_data(user):
@@ -44,12 +39,18 @@ def get_dashboard_data(user):
 
 
 def get_user_data(request):
-    user_object = {
-        'id': request.session['user_id'],
-        'name': request.session['user_name'],
-        'gym_name': request.session['user_gym_name']
-    }
-    return user_object
+    user_id = request.session['user_id']
+    try:
+        user = User.objects.get(id=user_id)
+        user_object = {
+            'id': user_id,
+            'name': user.name,
+            'gym_name': user.gym_name
+        }
+        return user_object
+    except ObjectDoesNotExist:
+        del request.session['user_id']
+        del request.session['user_token']
 
 
 def post_customer_save(form_basic, request):
