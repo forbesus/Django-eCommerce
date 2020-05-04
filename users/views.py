@@ -41,8 +41,6 @@ def logout(request):
     try:
         del request.session['user_token']
         del request.session['user_id']
-        del request.session['user_name']
-        del request.session['user_gym_name']
     except KeyError:
         pass
     return render(request, 'logout.html')
