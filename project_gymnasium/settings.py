@@ -125,17 +125,15 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
 
 SESSION_COOKIE_NAME = 'session-project-gymnasium'
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 
 STATIC_URL = '/static/'
-STATIC_PATH = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [
-    STATIC_PATH,
-]
-STATIC_ROOT = '/home/iamgirishsawant/project-gymnsium/static'
+STATIC_ROOT = os.path.normpath(os.path.join(BASE_DIR, 'staticfiles'))
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 MEDIA_ROOT = '/static/media'
 MEDIA_URL = '/media/'
