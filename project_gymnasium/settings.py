@@ -10,7 +10,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '4d)i=@612tzbw$5r05@fvgjtdz(5!)ldvhiq6v5_na#$56nax4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'gym-management999.herokuapp.com', 'iamgirishsawant.pythonanywhere.com']
 
@@ -88,7 +88,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'd7r2kisec6h8fq',
         'HOST': 'ec2-46-137-100-204.eu-west-1.compute.amazonaws.com',
-        'PORT': '5432',
+        'PORT': 5432,
         'USER': 'zpeulecahblnwv',
         'PASSWORD': '447164fc79c6168ff9a76c31d1e975c863afc311b4ce4b8b6927687ea099bed5',
     }
