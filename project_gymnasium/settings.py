@@ -12,7 +12,7 @@ SECRET_KEY = '4d)i=@612tzbw$5r05@fvgjtdz(5!)ldvhiq6v5_na#$56nax4'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1','gym-management999.herokuapp.com/', 'iamgirishsawant.pythonanywhere.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1','gym-management999.herokuapp.com', 'iamgirishsawant.pythonanywhere.com']
 
 # Application definition
 
